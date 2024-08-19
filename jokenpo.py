@@ -73,12 +73,14 @@ class Jokenpo:
         return False
             
     def ask_for_username(self):
-        menu_message = """Por favor, informe um nome de usuário.\nSe o nome já existir, os dados já existentes serão usados.\nSe o usuário ainda não existir, o usuário será criado.\n\nO nome de usuário deve conter de 4 a 20 letras e deve possuir somente letras e números:\n"""
+        menu_message = """Por favor, informe um nome de usuário.\nSe o nome já existir, os dados já existentes serão usados.\nSe o usuário ainda não existir, o usuário será criado.\n\nO nome de usuário deve conter de 4 a 20 letras e deve possuir somente letras e números:\nSe deseja retornar ao menu anterior, apenas pressione ENTER.\n"""
         while True:
             self.clear_terminal_input()
             print(menu_message)
             self.display_username_list()
             username = input()
+            if not username:
+                return ""
             if (len(username) < 4) or (len(username) > 20) or self.check_invalid_username_characters(username):
                 print("Por favor, informe um nome de usuário válido! Pressione ENTER para tentar novamente:\n")
                 input()
@@ -87,7 +89,7 @@ class Jokenpo:
 
     def validate_user_session(self):
         max_menu_option = len(self.user_session_menu.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}"
+        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         while True:
             self.clear_terminal_input()
             print("Bem vindo! Escolha como prosseguir\nSe escolher a opção de visitante, seus dados só serão armazenados durante essa sessão!")
@@ -95,11 +97,13 @@ class Jokenpo:
             option = input()
             if not option.isnumeric():
                 print(invalid_input_message)
+                input()
                 option = 0
                 continue
             option = int(option)
             if (option<1 or option>max_menu_option):
                 print(invalid_input_message)
+                input()
                 option = 0
                 continue
             return option
@@ -151,30 +155,35 @@ class Jokenpo:
         option = self.validate_user_session()
         if option == 1:
             username = self.ask_for_username()
+            if not username:
+                return False
             self.load_user_data(username)
         else:
             self.__init__()
+        return True
         
     def validate_menu_option(self):
         max_menu_option = len(self.main_menu_options.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}"
+        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         while True:
             self.display_menu()
             option = input()
             if not option.isnumeric():
                 print(invalid_input_message)
+                input()
                 option = 0
                 continue
             option = int(option)
             if (option<1 or option>max_menu_option):
                 print(invalid_input_message)
+                input()
                 option = 0
                 continue
             return option
     
     def validate_user_move(self, game_mode, match_number=0):
         max_menu_option = len(self.possible_moves.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}"
+        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         chose_message = "Escolha um movimento:\n" + "\n".join([f"{key} - {value}" for key,value in self.possible_moves.items()])
         game_mode_header = f"Modo de Jogo: {self.game_mode_options[game_mode]}"
         if self.game_mode_options[game_mode] != 1:
@@ -186,11 +195,13 @@ class Jokenpo:
             user_move = input()
             if not user_move.isnumeric():
                 print(invalid_input_message)
+                input()
                 user_move = 0
                 continue
             user_move = int(user_move)
             if (user_move<1 or user_move>max_menu_option):
                 print(invalid_input_message)
+                input()
                 user_move = 0
                 continue
             # If user wants to CANCEL the match
@@ -204,7 +215,7 @@ class Jokenpo:
         
     def validate_game_mode(self):
         max_menu_option = len(self.game_mode_options.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}"
+        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         chose_message = "Escolha um modo de jogo:\n" + "\n".join([f"{key} - {value}" for key,value in self.game_mode_options.items()])
         while True:
             self.clear_terminal_input()
@@ -212,11 +223,13 @@ class Jokenpo:
             user_move = input()
             if not user_move.isnumeric():
                 print(invalid_input_message)
+                input()
                 user_move = 0
                 continue
             user_move = int(user_move)
             if (user_move<1 or user_move>max_menu_option):
                 print(invalid_input_message)
+                input()
                 user_move = 0
                 continue
             return user_move
@@ -367,7 +380,8 @@ class Jokenpo:
                 data = {"users":[]}
                 json.dump(data, f)
         # Asking for username/visitor and loading existing user data if already exists
-        self.initiate_user_session()
+        while not self.initiate_user_session():
+            continue
         quit_game = False
         while not quit_game:
             option = self.validate_menu_option()
@@ -395,7 +409,8 @@ class Jokenpo:
                 self.show_statistics()
             # Entrar com Usuário / Trocar de Usuário
             elif option==3:
-                self.initiate_user_session()
+                while not self.initiate_user_session():
+                    continue
             # Sair
             elif option==4:
                 quit_confirmation = input("Realmente deseja sair do jogo?! Digite 'sim' e pressione enter:\n")
