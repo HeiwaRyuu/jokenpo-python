@@ -1,16 +1,16 @@
 """
-Author: Vítor Carvalho Marx Lima
+Author: Vitor Carvalho Marx Lima
 
-Link para o repositório com o código:
+Link para o repositorio com o codigo:
 Github: https://github.com/HeiwaRyuu/jokenpo-python
 
-Vídeo explicando e demonstrando as funcionalidades do código
+Video explicando e demonstrando as funcionalidades do codigo
 Youtube Video: https://youtu.be/OKkJh8vIlhU
 
 Email: vitor.carvalho.ufu@gmail.com
 
-Escolhi Python por já ter uma afinidade com a linguagem e por ela proporcionar 
-uma implementação mais ágil se comparada à outras linguagens como C/C++
+Escolhi Python por ja ter uma afinidade com a linguagem e por ela proporcionar 
+uma implementacao mais agil se comparada a outras linguagens como C/C++
 """
 import random
 import os
@@ -20,8 +20,8 @@ import math
 ## Game Class
 class Jokenpo:
     def __init__(self):
-        self.user_session_menu = {1:"Entrar com um usuário", 2:"Continuar como visitante"}
-        self.main_menu_options = {1:"Jogar", 2:"Estatísticas", 3:"Trocar de Usuário", 4:"Sair"}
+        self.user_session_menu = {1:"Entrar com um usuario", 2:"Continuar como visitante"}
+        self.main_menu_options = {1:"Jogar", 2:"Estatisticas", 3:"Trocar de Usuario", 4:"Sair"}
         self.game_mode_options = {1:"Uma partida", 2:"Melhor de 3", 3:"Melhor de 5", 4:"Retornar ao menu princial"}
         self.possible_moves = {1:"pedra", 2:"papel", 3:"tesoura", 4:"cancelar partida"}
 
@@ -46,7 +46,7 @@ class Jokenpo:
     def display_menu(self):
         self.clear_terminal_input()
         print(f"Bem vindo {self.session_username if self.session_username is not 'visitor' else 'Visitante'}!\n")
-        print("JOKENPÔ\n")
+        print("JOKENPO\n")
         print("\n".join([f"{key} - {value}" for key,value in self.main_menu_options.items()]))
         print("\n")
 
@@ -57,11 +57,11 @@ class Jokenpo:
             usernames = [user["username"] for user in data["users"]]
             numbered_names = [f"{index} - {name}" for index, name in enumerate(usernames)]
             user_lst = "\n".join(numbered_names)
-            print("Lista de usuáios existentes:")
+            print("Lista de usuaios existentes:")
             print(user_lst)
             print("\n")
         else:
-            print("No momento não há nenhum usuário criado, seja o primeiro a criar um usuário!\n")
+            print("No momento nao ha nenhum usuario criado, seja o primeiro a criar um usuario!\n")
         
 
     # Checking if all characters are either numbers or letters
@@ -73,7 +73,7 @@ class Jokenpo:
         return False
             
     def ask_for_username(self):
-        menu_message = """Por favor, informe um nome de usuário.\nSe o nome já existir, os dados já existentes serão usados.\nSe o usuário ainda não existir, o usuário será criado.\n\nO nome de usuário deve conter de 4 a 20 letras e deve possuir somente letras e números:\nSe deseja retornar ao menu anterior, apenas pressione ENTER.\n"""
+        menu_message = """Por favor, informe um nome de usuario.\nSe o nome ja existir, os dados ja existentes serao usados.\nSe o usuario ainda nao existir, o usuario sera criado.\n\nO nome de usuario deve conter de 4 a 20 letras e deve possuir somente letras e numeros:\nSe deseja retornar ao menu anterior, apenas pressione ENTER.\n"""
         while True:
             self.clear_terminal_input()
             print(menu_message)
@@ -82,17 +82,17 @@ class Jokenpo:
             if not username:
                 return ""
             if (len(username) < 4) or (len(username) > 20) or self.check_invalid_username_characters(username):
-                print("Por favor, informe um nome de usuário válido! Pressione ENTER para tentar novamente:\n")
+                print("Por favor, informe um nome de usuario valido! Pressione ENTER para tentar novamente:\n")
                 input()
                 continue
             return username
 
     def validate_user_session(self):
         max_menu_option = len(self.user_session_menu.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
+        invalid_input_message = f"Por favor, informe um numero de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         while True:
             self.clear_terminal_input()
-            print("Bem vindo! Escolha como prosseguir\nSe escolher a opção de visitante, seus dados só serão armazenados durante essa sessão!")
+            print("Bem vindo! Escolha como prosseguir\nSe escolher a opcao de visitante, seus dados so serao armazenados durante essa sessao!")
             print("\n".join([f"{key} - {value}" for key,value in self.user_session_menu.items()]))
             option = input()
             if not option.isnumeric():
@@ -164,7 +164,7 @@ class Jokenpo:
         
     def validate_menu_option(self):
         max_menu_option = len(self.main_menu_options.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
+        invalid_input_message = f"Por favor, informe um numero de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         while True:
             self.display_menu()
             option = input()
@@ -183,7 +183,7 @@ class Jokenpo:
     
     def validate_user_move(self, game_mode, match_number=0):
         max_menu_option = len(self.possible_moves.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
+        invalid_input_message = f"Por favor, informe um numero de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         chose_message = "Escolha um movimento:\n" + "\n".join([f"{key} - {value}" for key,value in self.possible_moves.items()])
         game_mode_header = f"Modo de Jogo: {self.game_mode_options[game_mode]}"
         if self.game_mode_options[game_mode] != 1:
@@ -208,14 +208,14 @@ class Jokenpo:
             if user_move == max_menu_option:
                 quit_confirmation = input("Cancelar a partida?! Digite 'sim' e pressione ENTER.\nSe deseja continuar, apenas pressione ENTER:\n")
                 if quit_confirmation == "sim":
-                    print("\nVocê CANCELOU a partida atual!\n")
+                    print("\nVoce CANCELOU a partida atual!\n")
                     return user_move
                 continue
             return user_move
         
     def validate_game_mode(self):
         max_menu_option = len(self.game_mode_options.keys())
-        invalid_input_message = f"Por favor, informe um número de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
+        invalid_input_message = f"Por favor, informe um numero de 1 a {max_menu_option}.\nPressione ENTER para tentar novamente."
         chose_message = "Escolha um modo de jogo:\n" + "\n".join([f"{key} - {value}" for key,value in self.game_mode_options.items()])
         while True:
             self.clear_terminal_input()
@@ -258,11 +258,11 @@ class Jokenpo:
             return 0
         ## pedra -> tesoura OU papel -> pedra OU tesoura -> papel
         elif (user_move == 1 and computer_move == 3) or (user_move == 2 and computer_move == 1) or (user_move == 3 and computer_move == 2):
-            print(f"Parabéns! Você venceu! :D\n{self.possible_moves[user_move]} ganha de {self.possible_moves[computer_move]}\n")
+            print(f"Parabens! Voce venceu! :D\n{self.possible_moves[user_move]} ganha de {self.possible_moves[computer_move]}\n")
             print(played_moves)
             return 1
         else:
-            print(f"Você perdeu! :(\n{self.possible_moves[user_move]} perde para {self.possible_moves[computer_move]}\n")
+            print(f"Voce perdeu! :(\n{self.possible_moves[user_move]} perde para {self.possible_moves[computer_move]}\n")
             print(played_moves)
             return -1
         
@@ -271,7 +271,7 @@ class Jokenpo:
         print(f"Jogador: {local_player_score}")
         print(f"Computador: {local_cpu_score}")
         if result == 0:
-            print(f"OBS: Jogos que resultam em empate não são contabilizados em uma melhor de {n}!\n")
+            print(f"OBS: Jogos que resultam em empate nao sao contabilizados em uma melhor de {n}!\n")
         print("\n")
         print("\nPressione ENTER para prosseguir")
         input()
@@ -296,34 +296,34 @@ class Jokenpo:
 
         self.clear_terminal_input()
         if local_player_score > local_cpu_score:
-            print(f"Parabéns! Você venceu essa melhor de {n}!\n")
+            print(f"Parabens! Voce venceu essa melhor de {n}!\n")
             return 1
         else:
-            print(f"Você perdeu essa melhor de {n}! Mais sorte na próxima!\n")
+            print(f"Voce perdeu essa melhor de {n}! Mais sorte na proxima!\n")
             return -1
         
     def show_statistics(self, game_mode_to_show=-1):
         print("Placar atual dos modos de jogo:\n")
         if game_mode_to_show == 1 or game_mode_to_show == -1:
             total_number_of_games = self.player_score + self.computer_score + self.game_draws
-            print("Jogos únicos:")
-            print(f"Vitórias do Jogador: {self.player_score} | Porcentagem: {round(100*self.player_score/total_number_of_games,2)}%")
-            print(f"Vitórias do Computador: {self.computer_score} | Porcentagem: {round(100*self.computer_score/total_number_of_games,2)}%")
-            print(f"Empates: {self.game_draws} | Porcentagem: {round(100*self.game_draws/total_number_of_games,2)}%")
+            print("Jogos unicos:")
+            print(f"Vitorias do Jogador: {self.player_score} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.player_score/total_number_of_games,2)}%")
+            print(f"Vitorias do Computador: {self.computer_score} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.computer_score/total_number_of_games,2)}%")
+            print(f"Empates: {self.game_draws} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.game_draws/total_number_of_games,2)}%")
             print(f"Total de jogos: {total_number_of_games}")
             print("\n")
         if game_mode_to_show == 2 or game_mode_to_show == -1:
             total_number_of_games = self.player_score_best_of_3 + self.computer_score_best_of_3
             print("Melhor de 3:")
-            print(f"Vitórias do Jogador: {self.player_score_best_of_3} | Porcentagem: {round(100*self.player_score_best_of_3/total_number_of_games,2)}%")
-            print(f"Vitórias do Computador: {self.computer_score_best_of_3} | Porcentagem: {round(100*self.computer_score_best_of_3/total_number_of_games,2)}%")
+            print(f"Vitorias do Jogador: {self.player_score_best_of_3} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.player_score_best_of_3/total_number_of_games,2)}%")
+            print(f"Vitorias do Computador: {self.computer_score_best_of_3} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.computer_score_best_of_3/total_number_of_games,2)}%")
             print(f"Total de jogos: {total_number_of_games}")
             print("\n")
         if game_mode_to_show == 3 or game_mode_to_show == -1:
             total_number_of_games = self.player_score_best_of_5 + self.computer_score_best_of_5
             print("Melhor de 5:")
-            print(f"Vitórias do Jogador: {self.player_score_best_of_5} | Porcentagem: {round(100*self.player_score_best_of_5/total_number_of_games,2)}%")
-            print(f"Vitórias do Computador: {self.computer_score_best_of_5} | Porcentagem: {round(100*self.computer_score_best_of_5/total_number_of_games,2)}%")
+            print(f"Vitorias do Jogador: {self.player_score_best_of_5} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.player_score_best_of_5/total_number_of_games,2)}%")
+            print(f"Vitorias do Computador: {self.computer_score_best_of_5} | Porcentagem: {0 if total_number_of_games == 0 else round(100*self.computer_score_best_of_5/total_number_of_games,2)}%")
             print(f"Total de jogos: {total_number_of_games}")
 
         print("\nPressione ENTER para prosseguir")
@@ -403,11 +403,11 @@ class Jokenpo:
                         result = self.play_best_of_n(n=5, game_mode_option=3)
                         self.update_player_cpu_score(result, game_mode_option=3)
                         self.show_statistics(game_mode_to_show=3)
-            # Estatísticas
+            # Estatisticas
             elif option==2:
                 self.clear_terminal_input()
                 self.show_statistics()
-            # Entrar com Usuário / Trocar de Usuário
+            # Entrar com Usuario / Trocar de Usuario
             elif option==3:
                 while not self.initiate_user_session():
                     continue
@@ -415,7 +415,7 @@ class Jokenpo:
             elif option==4:
                 quit_confirmation = input("Realmente deseja sair do jogo?! Digite 'sim' e pressione enter:\n")
                 if quit_confirmation == "sim":
-                    print("Obrigado por jogar, até uma próxima!")
+                    print("Obrigado por jogar, ate uma proxima!")
                     quit_game = True
 
 def main():
