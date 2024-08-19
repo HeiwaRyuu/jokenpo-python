@@ -138,6 +138,8 @@ class Jokenpo:
         if option == 1:
             username = self.ask_for_username()
             self.load_user_data(username)
+        else:
+            self.__init__()
         
     def validate_menu_option(self):
         max_menu_option = len(self.main_menu_options.keys())
