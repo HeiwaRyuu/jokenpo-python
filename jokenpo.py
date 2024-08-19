@@ -1,10 +1,24 @@
+"""
+Author: Vítor Carvalho Marx Lima
+
+Link para o repositório com o código:
+Github: https://github.com/HeiwaRyuu/jokenpo-python
+
+Vídeo explicando e demonstrando as funcionalidades do código
+Youtube Video: https://youtu.be/OKkJh8vIlhU
+
+Email: vitor.carvalho.ufu@gmail.com
+
+Escolhi Python por já ter uma afinidade com a linguagem e por ela proporcionar 
+uma implementação mais ágil se comparada à outras linguagens como C/C++
+"""
 import random
 import os
 import json
 import math
 
+## Game Class
 class Jokenpo:
-    """Classe para instanciar o jogo"""
     def __init__(self):
         self.user_session_menu = {1:"Entrar com um usuário", 2:"Continuar como visitante"}
         self.main_menu_options = {1:"Jogar", 2:"Estatísticas", 3:"Trocar de Usuário", 4:"Sair"}
@@ -278,23 +292,26 @@ class Jokenpo:
     def show_statistics(self, game_mode_to_show=-1):
         print("Placar atual dos modos de jogo:\n")
         if game_mode_to_show == 1 or game_mode_to_show == -1:
+            total_number_of_games = self.player_score + self.computer_score + self.game_draws
             print("Jogos únicos:")
-            print(f"Vitórias do Jogador: {self.player_score}")
-            print(f"Vitórias do Computador: {self.computer_score}")
-            print(f"Empates: {self.game_draws}")
-            print(f"Total de jogos: {self.player_score + self.computer_score + self.game_draws}")
+            print(f"Vitórias do Jogador: {self.player_score} | Porcentagem: {round(100*self.player_score/total_number_of_games,2)}%")
+            print(f"Vitórias do Computador: {self.computer_score} | Porcentagem: {round(100*self.computer_score/total_number_of_games,2)}%")
+            print(f"Empates: {self.game_draws} | Porcentagem: {round(100*self.game_draws/total_number_of_games,2)}%")
+            print(f"Total de jogos: {total_number_of_games}")
             print("\n")
         if game_mode_to_show == 2 or game_mode_to_show == -1:
+            total_number_of_games = self.player_score_best_of_3 + self.computer_score_best_of_3
             print("Melhor de 3:")
-            print(f"Vitórias do Jogador: {self.player_score_best_of_3}")
-            print(f"Vitórias do Computador: {self.computer_score_best_of_3}")
-            print(f"Total de jogos: {self.player_score_best_of_3 + self.computer_score_best_of_3}")
+            print(f"Vitórias do Jogador: {self.player_score_best_of_3} | Porcentagem: {round(100*self.player_score_best_of_3/total_number_of_games,2)}%")
+            print(f"Vitórias do Computador: {self.computer_score_best_of_3} | Porcentagem: {round(100*self.computer_score_best_of_3/total_number_of_games,2)}%")
+            print(f"Total de jogos: {total_number_of_games}")
             print("\n")
         if game_mode_to_show == 3 or game_mode_to_show == -1:
+            total_number_of_games = self.player_score_best_of_5 + self.computer_score_best_of_5
             print("Melhor de 5:")
-            print(f"Vitórias do Jogador: {self.player_score_best_of_5}")
-            print(f"Vitórias do Computador: {self.computer_score_best_of_5}")
-            print(f"Total de jogos: {self.player_score_best_of_5 + self.computer_score_best_of_5}")
+            print(f"Vitórias do Jogador: {self.player_score_best_of_5} | Porcentagem: {round(100*self.player_score_best_of_5/total_number_of_games,2)}%")
+            print(f"Vitórias do Computador: {self.computer_score_best_of_5} | Porcentagem: {round(100*self.computer_score_best_of_5/total_number_of_games,2)}%")
+            print(f"Total de jogos: {total_number_of_games}")
 
         print("\nPressione ENTER para prosseguir")
         input()
